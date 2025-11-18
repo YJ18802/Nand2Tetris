@@ -1,0 +1,52 @@
+// This file is part of www.nand2tetris.org
+// and the book "The Elements of Computing Systems"
+// by Nisan and Schocken, MIT Press.
+// File name: projects/1/DMux8Way.hdl
+/**
+ * 8-way demultiplexor:
+ * [a, b, c, d, e, f, g, h] = [in, 0,  0,  0,  0,  0,  0,  0] if sel = 000
+ *                            [0, in,  0,  0,  0,  0,  0,  0] if sel = 001
+ *                            [0,  0, in,  0,  0,  0,  0,  0] if sel = 010
+ *                            [0,  0,  0, in,  0,  0,  0,  0] if sel = 011
+ *                            [0,  0,  0,  0, in,  0,  0,  0] if sel = 100
+ *                            [0,  0,  0,  0,  0, in,  0,  0] if sel = 101
+ *                            [0,  0,  0,  0,  0,  0, in,  0] if sel = 110
+ *                            [0,  0,  0,  0,  0,  0,  0, in] if sel = 111
+ */
+CHIP DMux8Way {
+    IN in, sel[3];
+    OUT a, b, c, d, e, f, g, h;
+
+    PARTS:
+    //// Replace this comment with your code.
+    Not(in = sel[0], out =notsel0);
+    Not(in = sel[1], out =notsel1);
+    Not(in = sel[2], out =notsel2);
+    And(a = in , b = notsel0, out =OpA1);
+    And(a = OpA1 , b = notsel1, out =OpA2);
+    And(a = OpA2 , b = notsel2, out =a);
+    And(a = in , b = sel[0], out =OpB1);
+    And(a = OpB1 , b = notsel1, out =OpB2);
+    And(a = OpB2 , b = notsel2, out =b);
+    And(a = in , b = notsel0, out =OpC1);
+    And(a = OpC1 , b = sel[1], out =OpC2);
+    And(a = OpC2 , b = notsel2, out =c);
+    And(a = in , b = sel[0], out =OpD1);
+    And(a = OpD1 , b = sel[1], out =OpD2);
+    And(a = OpD2 , b = notsel2, out =d);
+    And(a = in , b = notsel0, out =OpE1);
+    And(a = OpE1 , b = notsel1, out =OpE2);
+    And(a = OpE2 , b = sel[2], out =e);
+    And(a = in , b = sel[0], out =OpF1);
+    And(a = OpF1 , b = notsel1, out =OpF2);
+    And(a = OpF2 , b = sel[2], out =f);
+    And(a = in , b = notsel0, out =OpG1);
+    And(a = OpG1 , b = sel[1], out =OpG2);
+    And(a = OpG2 , b = sel[2], out =g);
+    And(a = in , b = sel[0], out =OpH1);
+    And(a = OpH1 , b = sel[1], out =OpH2);
+    And(a = OpH2 , b = sel[2], out =h);
+
+
+
+}
